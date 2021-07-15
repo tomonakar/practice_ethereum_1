@@ -7,11 +7,16 @@ function App() {
   const [manager, setManager] = useState()
   web3.eth.getAccounts().then(console.log)
 
-  useEffect(async () => {
-    const getManager = async () => await lottery.methods.manager().call()
-    // const manager = await lottery.methods.manager().call()
-    const manager = getManager()
-    // setManager({ manager })
+  useEffect(() => {
+    try {
+      const getManager = async () => {
+        const manager = await lottery.methods.manager().call()
+        setManager(manager)
+      }
+      getManager()
+    } catch (e) {
+      console.log({ e })
+    }
   }, [])
 
   return (
