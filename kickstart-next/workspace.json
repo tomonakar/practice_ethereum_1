@@ -1,0 +1,99 @@
+{
+  "version": 2,
+  "projects": {
+    "campagin": {
+      "root": "apps/campagin",
+      "sourceRoot": "apps/campagin",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/next:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "root": "apps/campagin",
+            "outputPath": "dist/apps/campagin"
+          },
+          "configurations": {
+            "production": {}
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/next:server",
+          "options": {
+            "buildTarget": "campagin:build",
+            "dev": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "campagin:build:production",
+              "dev": false
+            }
+          }
+        },
+        "export": {
+          "executor": "@nrwl/next:export",
+          "options": {
+            "buildTarget": "campagin:build:production"
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/campagin"],
+          "options": {
+            "jestConfig": "apps/campagin/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/campagin/**/*.{ts,tsx,js,jsx}"]
+          }
+        }
+      }
+    },
+    "campagin-e2e": {
+      "root": "apps/campagin-e2e",
+      "sourceRoot": "apps/campagin-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/campagin-e2e/cypress.json",
+            "tsConfig": "apps/campagin-e2e/tsconfig.e2e.json",
+            "devServerTarget": "campagin:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "campagin:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/campagin-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  },
+  "cli": {
+    "defaultCollection": "@nrwl/next"
+  },
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "babel": true
+      }
+    },
+    "@nrwl/next": {
+      "application": {
+        "style": "css",
+        "linter": "eslint"
+      }
+    }
+  },
+  "defaultProject": "campagin"
+}
